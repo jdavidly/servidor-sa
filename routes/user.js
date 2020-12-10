@@ -1,44 +1,70 @@
 const express = require("express");
 const router = express.Router();
+const conn = require('../conexion');
 
 router.get('/', (req, res) => {
-    res.send("hola user");
+    const sql = `SELECT * FROM User`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
 });
 
 //validar informacion
 //tener un procedimiento en la bd y enviar unicamente email y contra
-//si existen, devolver ok:true, rol y datos del usuario
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
-    if (email === 'jorge@gmail.com') {
-        res.send({
-            ok: true,
-            response: {
-                rol: true,
-                name: 'jorge'
+    const sql = `SELECT * FROM User WHERE email='${email}' AND password='${password}'`;
+    console.log(email + password);
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.send({ auth: false });
+        } else {
+            console.log(results.length);
+            if (results.length === 1) {
+                console.log('si');
+                res.send({
+                    auth: true,
+                    result: results[0]
+                });
+            } else {
+                console.log('no encontro');
+                res.send({ auth: false });
             }
-        });
-    } else {
-        res.send({
-            ok: false
-        });
-    }
+        }
+    });
 });
 
 //validar informacion
 //tener un procedimiento que verifique e inserte la informacion
-//si inserto, devolver true
 router.post('/signinClient', (req, res) => {
     const { first_name, last_name, email, password, password_repeated, phone_number } = req.body;
-    res.send({
-        ok: true
+    let sql = `INSERT INTO User (first_name, last_name, email, password, phone_number, role) VALUES ('${first_name}','${last_name}','${email}','${password}','${phone_number}',true)`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.send({ auth: false });
+        } else {
+            console.log(results);
+            res.send({ auth: true });
+        }
     });
 });
 
 router.post('/signinProvider', (req, res) => {
-    const { first_name, last_name, email, password, password_repeated, phone_number } = req.body;
-    res.send({
-        ok: true
+    const { name, email, password, password_repeated, address } = req.body;
+    let sql = `INSERT INTO User (name, email, password, address, role) VALUES ('${name}','${email}','${password}','${address}',false)`;
+    let query = conn.query(sql, (err, results) => {
+        console.log(results);
+        if (err) {
+            res.send({ auth: false });
+        } else {
+            res.send({ auth: true });
+        }
     });
 });
 
