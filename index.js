@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const indexRoutes = require('./routes/index');
 const userRoutes = require('./routes/user');
+const productsRoutes = require('./routes/products');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -14,5 +15,6 @@ app.use(bodyParser.json());
 
 app.use('', indexRoutes);
 app.use('/user', userRoutes);
+app.use('/product', productsRoutes);
 
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`));
