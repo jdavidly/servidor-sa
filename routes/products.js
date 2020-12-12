@@ -26,7 +26,7 @@ router.post('/addProduct', (req, res) => {
             console.log(err);
             res.send({ auth: false });
         } else {
-            //console.log(results);
+            console.log(results);
             res.send({ auth: true });
         }
     });
