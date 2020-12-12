@@ -18,21 +18,16 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
     const sql = `SELECT * FROM User WHERE email='${email}' AND password='${password}'`;
-    console.log(email + password);
     const query = conn.query(sql, (err, results) => {
         if (err) {
-            console.log(err);
             res.send({ auth: false });
         } else {
-            console.log(results.length);
             if (results.length === 1) {
-                console.log('si');
                 res.send({
                     auth: true,
                     result: results[0]
                 });
             } else {
-                console.log('no encontro');
                 res.send({ auth: false });
             }
         }
