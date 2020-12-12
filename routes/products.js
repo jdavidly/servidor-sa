@@ -33,7 +33,6 @@ router.post('/addProduct', (req, res) => {
 
 router.post('/proveedor', (req, res) => {
     const { user } = req.body;
-    // TODO: Cambiar el rol en la consulta, por un rol 0 (proveedor)
     const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url from user u, producto p
         where u.role = 0
         and u.id = '${user}'
