@@ -54,17 +54,33 @@ router.post('/addProduct', (req, res) => {
     });
 });
 
+//Retorna los productos que perteneces a un proveedor
 router.post('/proveedor', (req, res) => {
     const { user } = req.body;
-    const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url from user u, producto p
+    const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url, p.descripcion from user u, producto p
         where u.role = 0
-        and u.id = '${user}'
-        and u.id = p.proveedor;`;
+        and u.user = '${user}'
+        and u.user = p.proveedor;`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
             res.send([]);
         } else {
             res.send(results);
+        }
+    });
+});
+
+router.post('/delete', (req, res) => {
+    const { producto } = req.body;
+    
+    const sql = `delete from producto where producto = '${producto}';`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.send({ auth: false });
+        } else {
+            console.log(results);
+            res.send({ auth: true });
         }
     });
 });
