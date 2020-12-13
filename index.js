@@ -6,6 +6,7 @@ const cors = require('cors');
 const indexRoutes = require('./routes/index');
 const userRoutes = require('./routes/user');
 const productsRoutes = require('./routes/products');
+const cartRoutes = require('./routes/cart');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -16,5 +17,6 @@ app.use(bodyParser.json());
 app.use('', indexRoutes);
 app.use('/user', userRoutes);
 app.use('/product', productsRoutes);
+app.use('/cart', cartRoutes);
 
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`));
