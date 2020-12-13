@@ -41,10 +41,8 @@ router.post('/signinClient', (req, res) => {
     let sql = `INSERT INTO User (first_name, last_name, email, password, phone_number, role) VALUES ('${first_name}','${last_name}','${email}','${password}','${phone_number}',true)`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
-            console.log(err);
             res.send({ auth: false });
         } else {
-            console.log(results);
             res.send({ auth: true });
         }
     });
@@ -54,7 +52,6 @@ router.post('/signinProvider', (req, res) => {
     const { name, email, password, password_repeated, address } = req.body;
     let sql = `INSERT INTO User (name, email, password, address, role) VALUES ('${name}','${email}','${password}','${address}',false)`;
     let query = conn.query(sql, (err, results) => {
-        console.log(results);
         if (err) {
             res.send({ auth: false });
         } else {
