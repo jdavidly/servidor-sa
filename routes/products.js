@@ -13,6 +13,29 @@ router.get('/categorias', (req, res) => {
     });
 });
 
+router.get('/products', (req, res) => {
+    const sql = `SELECT * FROM producto`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+router.get('/products/:category', (req, res) => {
+    const category = req.params['category'];
+    const sql = `SELECT * FROM producto WHERE categoria=${category}`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
 router.post('/addProduct', (req, res) => {
     console.log("agregando un producto")
     //console.log(req.body);
