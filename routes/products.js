@@ -40,9 +40,9 @@ router.post('/addProduct', (req, res) => {
     console.log("agregando un producto")
     //console.log(req.body);
     //console.log(req.query);
-    const { nombre, precio, cantidad, categoria, imagen, user } = req.body;
+    const { nombre, precio, cantidad, categoria, imagen, user, descripcion } = req.body;
     console.log(nombre, precio, cantidad, categoria, imagen, user);
-    let sql = `INSERT INTO producto (nombre, precio, cantidad, categoria, url, proveedor) VALUES ('${nombre}','${precio}','${cantidad}','${categoria}','${imagen}','${user}')`;
+    let sql = `INSERT INTO producto (nombre, precio, cantidad, categoria, url, proveedor, descripcion) VALUES ('${nombre}','${precio}','${cantidad}','${categoria}','${imagen}','${user}','${descripcion}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             console.log(err);
@@ -58,8 +58,7 @@ router.post('/addProduct', (req, res) => {
 router.post('/proveedor', (req, res) => {
     const { user } = req.body;
     const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url, p.descripcion from user u, producto p
-        where u.role = 0
-        and u.user = '${user}'
+        where u.user = '${user}'
         and u.user = p.proveedor;`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
