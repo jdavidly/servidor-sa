@@ -85,4 +85,21 @@ router.post('/delete', (req, res) => {
     });
 });
 
+router.post('/update-price', (req, res) => {
+    const { producto, precio, cantidad } = req.body;
+    const sql = `
+        UPDATE producto
+        SET precio = '${precio}', cantidad = '${cantidad}'
+        WHERE producto = '${producto}';`;
+        const query = conn.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.send({ auth: false });
+        } else {
+            console.log(results);
+            res.send({ auth: true });
+        }
+    });
+});
+
 module.exports = router;
