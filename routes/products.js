@@ -17,10 +17,33 @@ router.get('/products', (req, res) => {
     const sql = `SELECT * FROM producto`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send([]);
+            res.send({
+                results: [],
+                count: 0
+            });
         } else {
-            res.send(results);
+            res.send({
+                results,
+                count: results.length
+            });
         }
+    });
+});
+
+
+const products = [];
+for (let i = 0; i < 35; i++) {
+    products.push({
+        nombre: `nombre${i}`,
+        precio: i + 5,
+    });
+}
+const size = 12;
+router.get('/page/:page', (req, res) => {
+    const page = req.params['page'] - 1;
+    res.send({
+        pages: Math.ceil(products.length / size),
+        products: products.slice(page * size, page * size + size)
     });
 });
 
@@ -72,7 +95,7 @@ router.post('/proveedor', (req, res) => {
 
 router.post('/delete', (req, res) => {
     const { producto } = req.body;
-    
+
     const sql = `delete from producto where producto = '${producto}';`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
