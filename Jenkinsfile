@@ -45,7 +45,24 @@ pipeline
                 {
                     sh 'docker build -t image-microservicio-usuario .'
                 }
+                echo 'Creación de artefactos correcta'
             }
+        }
+
+        stage("Aprobación de despliegue")
+        {
+            echo 'Despliegue aprobado.'
+        }
+        
+
+        stage("Gestión de la configuración a través de ansible")
+        {
+
+        }   
+
+        stage("Despliegue del sistema ")
+        {
+
         }
 
     }
