@@ -59,6 +59,7 @@ pipeline
                 {                    
                     //echo 'Borrando ultima version del contenedor'
                     //sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
+                    sh 'export PROJECT_ID=focal-lens-299204'
 
                     echo 'Etiquetando contenedor'
                     sh 'docker tag image-microservicio-usuario:latest gcr.io/focal-lens-299204/microservicio-usuario-image:v1'
@@ -86,6 +87,12 @@ pipeline
             steps
             {
                 echo 'Configurando los servidores a través de ansible'
+                echo 'Configurando kluster en kubernetes'
+                //sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'
+                //sh 'kubectl scale deployment app-grupo14 --replicas=3'
+                //sh 'kubectl autoscale deployment app-grupo14 --cpu-percent=80 --min=1 --max=4'
+                //sh 'kubectl expose deployment app-grupo14 --name=app-grupo14-service --type=LoadBalancer --port 80 --target-port 3000'                
+
             }
         }   
 
@@ -93,7 +100,11 @@ pipeline
         {
             steps
             {
-                echo 'Configurando kluster en kubernetes'
+                echo 'Desplegando nueva versión'
+                //sh 'kubectl set image deployment/app-grupo14 app-grupo14=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'            
+                sh 'kubectl set image deployment/app-grupo14 microservicio-usuario-image=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'    
+
+                echo 'Se ha desplegado un nueva versión.'
             }
         }
 
