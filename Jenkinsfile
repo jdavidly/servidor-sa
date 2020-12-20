@@ -19,8 +19,7 @@ pipeline
                 {                    
                     sh 'npm install'                
                     sh 'npm start'
-                }                                                                                                                                       
-            }                                    
+                }                                                                                                                                                   }                                    
         }
 
         stage("Realización de pruebas unitarias")
@@ -51,18 +50,27 @@ pipeline
 
         stage("Aprobación de despliegue")
         {
-            echo 'Despliegue aprobado.'
+            steps
+            {
+                echo 'Despliegue aprobado.'
+            }
         }
         
 
         stage("Gestión de la configuración a través de ansible")
-        {
-
+        {   
+            steps
+            {
+                echo 'Configurando los servidores a través de ansible'
+            }
         }   
 
         stage("Despliegue del sistema ")
         {
-
+            steps
+            {
+                echo 'Configurando kluster en kubernetes'
+            }
         }
 
     }
