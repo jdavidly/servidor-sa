@@ -1,0 +1,15 @@
+- name: Creación de cluster proyecto
+  google.cloud.gcp_container_cluster:
+    name: clúster de producción
+    initial_node_count: 2
+    master_auth:
+      username: administrador-cluster
+      password: grupo14
+    node_config:
+      machine_type: n1-standard-4
+      disk_size_gb: 30
+    location: us-central1-a
+    project: test_project
+    auth_kind: serviceaccount
+    service_account_file: "/tmp/auth.pem"
+    state: present
