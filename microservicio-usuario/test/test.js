@@ -19,7 +19,7 @@ describe('Pruebas unitarias sobre el servidor de backend', ()=>
         {
             if(!error)
             {
-                expect(JSON.parse(response.body)['auth']).toBe(true);                                  
+                expect(JSON.parse(response.body)['auth']).toBe(false);                                  
                 done();
             }
             else
