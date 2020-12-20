@@ -33,6 +33,19 @@ router.post('/remove', (req, res) => {
     });
 });
 
+router.post('/removeBeforePayment', (req, res) => {
+    const { timestamp } = req.body;      
+    let sql = `DELETE FROM carrito where codigo=${timestamp} `;
+    console.log(sql);
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ auth: false });
+        } else {
+            res.send({ auth: true });
+        }
+    });
+});
+
 
 router.get('/all/:user', (req,res)=>{
     const user = req.params['user'];    

@@ -16,9 +16,12 @@ router.get('/', (req, res) => {
 //validar informacion
 //tener un procedimiento en la bd y enviar unicamente email y contra
 router.post('/login', (req, res) => {
+    console.log("en login");
     const { email, password } = req.body;
-    const sql = `SELECT * FROM User WHERE email='${email}' AND password='${password}'`;
+    const sql = `SELECT * FROM usuario WHERE correo='${email}' AND pass='${password}'`;
+    console.log(sql);
     const query = conn.query(sql, (err, results) => {
+        
         if (err) {
             res.send({ auth: false });
         } else {

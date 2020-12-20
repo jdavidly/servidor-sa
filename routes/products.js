@@ -63,9 +63,9 @@ router.post('/addProduct', (req, res) => {
     console.log("agregando un producto")
     //console.log(req.body);
     //console.log(req.query);
-    const { nombre, precio, cantidad, categoria, imagen, user } = req.body;
+    const { nombre, precio, cantidad, categoria, imagen, user, descripcion } = req.body;
     console.log(nombre, precio, cantidad, categoria, imagen, user);
-    let sql = `INSERT INTO producto (nombre, precio, cantidad, categoria, url, proveedor) VALUES ('${nombre}','${precio}','${cantidad}','${categoria}','${imagen}','${user}')`;
+    let sql = `INSERT INTO producto (nombre, precio, cantidad, categoria, url, proveedor, descripcion) VALUES ('${nombre}','${precio}','${cantidad}','${categoria}','${imagen}','${user}','${descripcion}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             console.log(err);
@@ -80,10 +80,9 @@ router.post('/addProduct', (req, res) => {
 //Retorna los productos que perteneces a un proveedor
 router.post('/proveedor', (req, res) => {
     const { user } = req.body;
-    const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url, p.descripcion from user u, producto p
-        where u.role = 0
-        and u.user = '${user}'
-        and u.user = p.proveedor;`;
+    const sql = `select p.id_producto, p.nombre, p.precio_unitario, p.inventario, p.categoria, p.url_, p.descripcion from usuario u, producto p
+        where u.id_usuario = '${user}'
+        and u.id_usuario = p.usuario_id_usuario;`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
             res.send([]);
@@ -98,6 +97,23 @@ router.post('/delete', (req, res) => {
 
     const sql = `delete from producto where producto = '${producto}';`;
     const query = conn.query(sql, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.send({ auth: false });
+        } else {
+            console.log(results);
+            res.send({ auth: true });
+        }
+    });
+});
+
+router.post('/update-price', (req, res) => {
+    const { producto, precio, cantidad } = req.body;
+    const sql = `
+        UPDATE producto
+        SET precio = '${precio}', cantidad = '${cantidad}'
+        WHERE producto = '${producto}';`;
+        const query = conn.query(sql, (err, results) => {
         if (err) {
             console.log(err);
             res.send({ auth: false });
