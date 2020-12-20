@@ -57,9 +57,9 @@ router.post('/addProduct', (req, res) => {
 //Retorna los productos que perteneces a un proveedor
 router.post('/proveedor', (req, res) => {
     const { user } = req.body;
-    const sql = `select p.producto, p.nombre, p.precio, p.cantidad, p.categoria, p.url, p.descripcion from user u, producto p
-        where u.user = '${user}'
-        and u.user = p.proveedor;`;
+    const sql = `select p.id_producto, p.nombre, p.precio_unitario, p.inventario, p.categoria, p.url_, p.descripcion from usuario u, producto p
+        where u.id_usuario = '${user}'
+        and u.id_usuario = p.usuario_id_usuario;`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
             res.send([]);
