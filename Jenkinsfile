@@ -8,7 +8,7 @@ pipeline
 
             steps
             {      
-                sh 'sudo usermod -a -G docker ${USER}'          
+                                        
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
