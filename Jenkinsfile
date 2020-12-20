@@ -57,8 +57,8 @@ pipeline
             {                
                 dir("microservicio-usuario")
                 {                    
-                    echo 'Borrando ultima version del contenedor'
-                    sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
+                    //echo 'Borrando ultima version del contenedor'
+                    //sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
 
                     echo 'Etiquetando contenedor'
                     sh 'docker tag image-microservicio-usuario:latest gcr.io/focal-lens-299204/microservicio-usuario-image:v1'
