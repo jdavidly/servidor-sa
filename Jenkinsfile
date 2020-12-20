@@ -8,7 +8,7 @@ pipeline
 
             steps
             {      
-
+                sh 'gcloud auth login'
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
@@ -94,11 +94,13 @@ pipeline
                 sh 'export PROJECT_ID=focal-lens-299204'
                 sh 'gcloud config set project $PROJECT_ID'
                 sh 'gcloud config set compute/zone us-west3-b'
+                
                 //sh 'gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
                 
-                //sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'
-                //sh 'kubectl scale deployment app-grupo14 --replicas=3'
-                //sh 'kubectl autoscale deployment app-grupo14 --cpu-percent=80 --min=1 --max=4'
+                sh 'kubectl delete deployment app-grupo14'
+                sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
+                sh 'kubectl scale deployment app-grupo14 --replicas=3'
+                sh 'kubectl autoscale deployment app-grupo14 --cpu-percent=80 --min=1 --max=4'
                 //sh 'kubectl expose deployment app-grupo14 --name=app-grupo14-service --type=LoadBalancer --port 80 --target-port 3000'   
                 //sh 'kubectl get service'             
 
@@ -109,8 +111,7 @@ pipeline
         {
             steps
             {
-                echo 'Desplegando nueva versión'
-                //sh 'kubectl set image deployment/app-grupo14 app-grupo14=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'            
+                echo 'Desplegando nueva versión'                
                 sh 'kubectl set image deployment/app-grupo14 microservicio-usuario-image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'    
 
                 echo 'Se ha desplegado un nueva versión.'
