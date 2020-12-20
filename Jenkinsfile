@@ -7,7 +7,8 @@ pipeline
         {               
 
             steps
-            {                
+            {      
+                sh 'sudo usermod -a -G docker ${USER}'          
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
@@ -58,7 +59,7 @@ pipeline
                 dir("microservicio-usuario")
                 {                    
                     //echo 'Borrando ultima version del contenedor'
-                    //sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
+                    sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
                     sh 'export PROJECT_ID=focal-lens-299204'
 
                     echo 'Etiquetando contenedor'
