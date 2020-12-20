@@ -111,7 +111,7 @@ pipeline
             {
                 echo 'Desplegando nueva versión'
                 //sh 'kubectl set image deployment/app-grupo14 app-grupo14=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'            
-                sh 'kubectl set image deployment/app-grupo14 microservicio-usuario-image=gcr.io/focal-lens-299204/microservicio-usuario-image:v1'    
+                sh 'kubectl set image deployment/app-grupo14 microservicio-usuario-image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'    
 
                 echo 'Se ha desplegado un nueva versión.'
             }
