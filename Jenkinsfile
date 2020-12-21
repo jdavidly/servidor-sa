@@ -11,8 +11,7 @@ pipeline
             /*4/1AY0e-g7Wj5fXxa5NDwhREhYFjWdxN3UfxMFLMK6hDoar7swHY52-owguWS4*/
             steps
             {       
-                //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login 2616501300304@ingenieria.usac.edu.gt' 
-                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth activate-service-account devops@focal-lens-299204.iam.gserviceaccount.com --key-file=/bitnami/jenkins/jenkins_home/credentials.json'
+                //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login 2616501300304@ingenieria.usac.edu.gt'                 
                 //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth configure-docker'   
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
@@ -73,6 +72,8 @@ pipeline
                     sh 'docker tag image-microservicio-usuario:latest gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
 
                     echo 'Guardando el contenedor en el registro'
+                    sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth activate-service-account devops@focal-lens-299204.iam.gserviceaccount.com --key-file=/bitnami/jenkins/jenkins_home/credentials.json'
+                    sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth configure-docker'
                     sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'   
                                   
 
