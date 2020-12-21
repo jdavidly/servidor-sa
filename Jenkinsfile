@@ -74,7 +74,7 @@ pipeline
                     echo 'Guardando el contenedor en el registro'
                     sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth activate-service-account devops@focal-lens-299204.iam.gserviceaccount.com --key-file=/bitnami/jenkins/jenkins_home/credentials.json'
                     sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth configure-docker'
-                    sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'   
+                    //sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'   
                                   
 
                     echo 'Registrando el contenedor del microservicio usuario'
