@@ -73,7 +73,7 @@ pipeline
                     sh 'docker tag image-microservicio-usuario:latest gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
 
                     echo 'Guardando el contenedor en el registro'
-                    //sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'   
+                    sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'   
                                   
 
                     echo 'Registrando el contenedor del microservicio usuario'
