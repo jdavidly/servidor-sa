@@ -106,7 +106,8 @@ pipeline
                 //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
                 
                 sh 'kubectl delete deployment app-grupo14'
-                sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
+                //sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
+                sh 'kubectl create deployment app-grupo14 --image=microservicio-usuario-image:latest'
                 sh 'kubectl scale deployment app-grupo14 --replicas=3'
                 //sh 'kubectl autoscale deployment app-grupo14 --cpu-percent=80 --min=1 --max=4'
                 //sh 'kubectl expose deployment app-grupo14 --name=app-grupo14-service --type=LoadBalancer --port 80 --target-port 3000'   
