@@ -96,7 +96,7 @@ pipeline
                 sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set project focal-lens-299204'
                 sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set compute/zone us-west3-b'
                 
-                //sh 'gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
+                //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
                 
                 sh 'kubectl delete deployment app-grupo14'
                 sh 'kubectl create deployment app-grupo14 --image=gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
