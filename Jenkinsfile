@@ -7,7 +7,8 @@ pipeline
         {               
 
             steps
-            {                      
+            {       
+                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login'               
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
@@ -68,7 +69,7 @@ pipeline
                     echo 'Guardando el contenedor en el registro'
                     //sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
                     ///home/g2616501300304/google-cloud-sdk/bin/gcloud
-                    
+
                     echo 'Registrando el contenedor del microservicio usuario'
                 }                                                            
             }
@@ -92,8 +93,8 @@ pipeline
                 echo 'Configurando kluster en kubernetes'
 
                 sh 'export PROJECT_ID=focal-lens-299204'
-                sh 'gcloud config set project $PROJECT_ID'
-                sh 'gcloud config set compute/zone us-west3-b'
+                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set project $PROJECT_ID'
+                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set compute/zone us-west3-b'
                 
                 //sh 'gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
                 
