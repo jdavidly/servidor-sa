@@ -5,10 +5,10 @@ pipeline
     {
         stage("Prueba de ejecución")
         {               
-
+            /*4/1AY0e-g7Wj5fXxa5NDwhREhYFjWdxN3UfxMFLMK6hDoar7swHY52-owguWS4*/
             steps
             {       
-                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login'               
+                //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login'               
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
