@@ -8,7 +8,7 @@ pipeline
             /*4/1AY0e-g7Wj5fXxa5NDwhREhYFjWdxN3UfxMFLMK6hDoar7swHY52-owguWS4*/
             steps
             {       
-                //sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login'               
+                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud auth login 2616501300304@ingenieria.usac.edu.gt'               
                 echo 'Estableciendo variables de entorno para pruebas'               
                 sh 'export PORTCLIENTE=9000'                
                 sh 'export PORTRESTAURANTE=9100'
@@ -93,7 +93,7 @@ pipeline
                 echo 'Configurando kluster en kubernetes'
 
                 sh 'export PROJECT_ID=focal-lens-299204'
-                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set project $PROJECT_ID'
+                sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set project focal-lens-299204'
                 sh '/home/g2616501300304/google-cloud-sdk/bin/gcloud config set compute/zone us-west3-b'
                 
                 //sh 'gcloud container clusters create cluster-grupo14  --machine-type=g1-small --disk-size=20G'
