@@ -66,8 +66,9 @@ pipeline
                     sh 'docker tag image-microservicio-usuario:latest gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
 
                     echo 'Guardando el contenedor en el registro'
-                    sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
-
+                    //sh 'docker push gcr.io/focal-lens-299204/microservicio-usuario-image:latest'
+                    ///home/g2616501300304/google-cloud-sdk/bin/gcloud
+                    
                     echo 'Registrando el contenedor del microservicio usuario'
                 }                                                            
             }
