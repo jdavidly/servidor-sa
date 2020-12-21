@@ -66,6 +66,7 @@ pipeline
                 {                    
                     //echo 'Borrando ultima version del contenedor'
                     //sh 'gcloud container images delete gcr.io/focal-lens-299204/microservicio-usuario-image:v1 --force-delete-tags'
+                    //gcloud container clusters get-credentials cluster-grupo14 --ZONE us-west3-b
                     sh 'export PROJECT_ID=focal-lens-299204'
 
                     echo 'Etiquetando contenedor'
