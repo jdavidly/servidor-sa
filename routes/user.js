@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
     console.log("en login");
     const { email, password } = req.body;
-    const sql = `SELECT * FROM usuario WHERE correo='${email}' AND pass='${password}'`;
+    const sql = `SELECT id_usuario as user FROM usuario WHERE correo='${email}' AND pass='${password}'`;
     console.log(sql);
     const query = conn.query(sql, (err, results) => {
         
