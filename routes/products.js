@@ -18,21 +18,21 @@ router.get('/products', (req, res) => {
     const sql = `SELECT * FROM producto`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
-            res.send({
+            res.send([]);
+            /*res.send({
                 results: [],
                 count: 0
-            });
+            });*/
         } else {
-            res.send({
+            res.send(results);
+            /*res.send({
                 results,
                 count: results.length
-            });
+            });*/
         }
     });
 });
-
-
-const products = [];
+/*const products = [];
 for (let i = 0; i < 35; i++) {
     products.push({
         nombre: `nombre${i}`,
@@ -46,7 +46,7 @@ router.get('/page/:page', (req, res) => {
         pages: Math.ceil(products.length / size),
         products: products.slice(page * size, page * size + size)
     });
-});
+});*/ 
 
 router.get('/products/:category', (req, res) => {
     const category = req.params['category'];
@@ -109,7 +109,7 @@ router.post('/proveedor', (req, res) => {
 
 router.post('/delete', (req, res) => {
     const { producto } = req.body;
-
+    
     const sql = `delete from producto where producto = '${producto}';`;
     const query = conn.query(sql, (err, results) => {
         if (err) {
@@ -197,6 +197,132 @@ router.post('/ofertarSubasta', (req, res) => {
         }
     });
 
+});
+
+
+
+
+// --------------- CONEXION AL BUS DE INTEGRACION ---------------
+router.post('/crear-producto-cliente', (req, res) => {
+    //console.log("agregando un producto")
+    const { id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora} = req.body;
+    console.log('PARAMS: ',id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
+    /*
+    let sql = `CALL Nuevo_Producto(?,?,?,?,?,?,?,?)`;
+    let sqlParams = [nombre,descripcion,imagen,precio,user,categoria,cantidad,forma];
+    let query = conn.query(sql, sqlParams, (err, results) => {
+        if (err) {
+            console.log("error: ", err);
+            res.send({ auth: false });
+        } else {
+            //console.log("no es error: ", results);
+            res.send(results);
+        }
+    });*/
+});
+
+router.post('/crear-producto-proveedor', (req, res) => {
+    const { id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora} = req.body;
+    console.log('PARAMS: ',id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
+    
+});
+
+router.get('/ver-productos', (req, res) => {
+    /*[
+        {
+        "id_producto": 1,
+        "nombre": "Monitor LGU32",
+        "descripcion": "Monitor LG de 32 pulgadas 4k@240HZ",
+        "stock": 50,
+        "precio": 2000,
+        "foto": "https://www.lg.com/us/images/monitors/md05602277/gallery/1100-1.jpg",
+        "fecha_subasta": null,
+        "precio_inicial_subasta": null,
+        "precio_compralo_ahora": null
+        },
+        {
+        "id_producto": 10,
+        "nombre": "Teclado TUF gaming-7",
+        "descripcion": "Teclado mecánico óptico de gaming TUF Gaming K7 con resistencia IP56 contra polvo y líquidos, aluminio aeronáutico e iluminación Aura Sync",
+        "stock": 60,
+        "precio": null,
+        "foto": "https://www.asus.com/media/global/products/VhfjeAw84tomuPVC/P_setting_xxx_0_90_end_500.png",
+        "fecha_subasta": 1608886800,
+        "precio_inicial_subasta": 150,
+        "precio_compralo_ahora": 500
+        }
+    ]*/
+    const sql = `SELECT * FROM forma_pago`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+router.get('/ver-productos-fase-3', (req, res) => {
+    /*[
+        {
+        "id_producto": 1,
+        "nombre": "Monitor LGU32",
+        "descripcion": "Monitor LG de 32 pulgadas 4k@240HZ",
+        "stock": 50,
+        "precio": 2000,
+        "foto": "https://www.lg.com/us/images/monitors/md05602277/gallery/1100-1.jpg",
+        "fecha_subasta": null,
+        "precio_inicial_subasta": null,
+        "precio_compralo_ahora": null
+        },
+        {
+        "id_producto": 10,
+        "nombre": "Teclado TUF gaming-7",
+        "descripcion": "Teclado mecánico óptico de gaming TUF Gaming K7 con resistencia IP56 contra polvo y líquidos, aluminio aeronáutico e iluminación Aura Sync",
+        "stock": 60,
+        "precio": null,
+        "foto": "https://www.asus.com/media/global/products/VhfjeAw84tomuPVC/P_setting_xxx_0_90_end_500.png",
+        "fecha_subasta": 1608886800,
+        "precio_inicial_subasta": 150,
+        "precio_compralo_ahora": 500
+        }
+    ]*/
+    const sql = `SELECT * FROM forma_pago`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+router.get('/ver-producto', (req, res) => { ///ver-producto?id_producto=val
+    /*{
+        "id_producto": 10,
+        "nombre": "Teclado TUF gaming-7",
+        "descripcion": "Teclado mecánico óptico de gaming TUF Gaming K7 con resistencia IP56 contra polvo y líquidos, aluminio aeronáutico e iluminación Aura Sync",
+        "stock": 60,
+        "precio": null,
+        "foto": "https://www.asus.com/media/global/products/VhfjeAw84tomuPVC/P_setting_xxx_0_90_end_500.png",
+        "fecha_subasta": 1608886800,
+        "precio_inicial_subasta": 150,
+        "precio_compralo_ahora": 500
+        }*/
+    const sql = `SELECT * FROM forma_pago`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send([]);
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+router.post('/realizar-compra', (req, res) => {
+    const { id_cliente, productos} = req.body;
+    console.log('PARAMS: ',id_cliente, productos);
+    
 });
 
 module.exports = router;
