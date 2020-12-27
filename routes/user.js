@@ -37,6 +37,25 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.post('/loginp', (req, res) => {
+    const { correo, pass } = req.body;
+    const sql = `SELECT * FROM Usuario WHERE correo='${correo}' AND pass='${pass}'`;
+    const query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ auth: false });
+        } else {
+            if (results.length === 1) {
+                res.send({
+                    auth: true,
+                    result: results[0]
+                });
+            } else {
+                res.send({ auth: false });
+            }
+        }
+    });
+});
+
 //validar informacion
 //tener un procedimiento que verifique e inserte la informacion
 router.post('/signinClient', (req, res) => {
@@ -51,9 +70,21 @@ router.post('/signinClient', (req, res) => {
     });
 });
 
+router.post('/signinClientp', (req, res) => {
+    const { nombres, nit, edad, correo, pass, telefono } = req.body;
+    let sql = `call nuevo_usuario('${nombres}','${nit}',${edad},'${correo}','${telefono}',0,'','${pass}')`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) {
+            res.send({ auth: false });
+        } else {
+            res.send({ auth: true });
+        }
+    });
+});
+
 router.post('/signinProvider', (req, res) => {
-    const { name, email, password, password_repeated, address } = req.body;
-    let sql = `INSERT INTO User (name, email, password, address, role) VALUES ('${name}','${email}','${password}','${address}',false)`;
+    const { nombres, nit, correo, pass, direccion } = req.body;
+    let sql = `call nuevo_usuario('${nombres}','${nit}',0,'${correo}','',1,'${direccion}','${pass}')`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ auth: false });
