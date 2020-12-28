@@ -43,16 +43,21 @@ router.post('/login', (req, res) => {
 router.post('/loginp', (req, res) => {
     const { email, contrasena } = req.body;
     const sql = `SELECT * FROM Usuario WHERE email='${email}' AND contrasena='${contrasena}'`;
+    console.log(sql);
     const query = conn.query(sql, (err, results) => {
         if (err) {
+            console.log(err)
+            console.log("error1")
             res.send({ auth: false });
         } else {
             if (results.length === 1) {
+                //console.log(results[0])
                 res.send({
                     auth: true,
                     result: results[0]
                 });
             } else {
+                console.log("error2")
                 res.send({ auth: false });
             }
         }
