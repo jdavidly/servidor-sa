@@ -16,9 +16,9 @@ router.get('/', (req, res) => {
 //validar informacion
 //tener un procedimiento en la bd y enviar unicamente email y contra
 router.post('/login', (req, res) => {
-    console.log("en login");
-    const { email, password } = req.body;
-    const sql = `SELECT id_usuario as user FROM usuario WHERE correo='${email}' AND pass='${password}'`;
+    const { email, contrasena } = req.body;
+    const sql = `SELECT * FROM usuario WHERE email='${email}' AND contrasena='${contrasena}'`;
+    console.log(sql);
     const query = conn.query(sql, (err, results) => {
         
         if (err) {
@@ -35,20 +35,23 @@ router.post('/login', (req, res) => {
         }
     });
 });
-
+/*El login se probo en postman con esta cadena --Eliu
+{
+    "email":"eder@usac.com",
+    "contrasena":"SuperSegura"
+}*/
 router.post('/loginp', (req, res) => {
-    const { correo, pass } = req.body;
-    const sql = `SELECT * FROM Usuario WHERE correo='${correo}' AND pass='${pass}'`;
-    console.log(sql)
-    //console.log(conn);
-    
+    const { email, contrasena } = req.body;
+    const sql = `SELECT * FROM Usuario WHERE email='${email}' AND contrasena='${contrasena}'`;
+    console.log(sql);
     const query = conn.query(sql, (err, results) => {
         if (err) {
+            console.log(err)
             console.log("error1")
             res.send({ auth: false });
         } else {
             if (results.length === 1) {
-                console.log(results[0])
+                //console.log(results[0])
                 res.send({
                     auth: true,
                     result: results[0]
@@ -75,9 +78,17 @@ router.post('/signinClient', (req, res) => {
     });
 });
 
+/*El registro se probo en postman con esta cadena --Eliu
+{
+    "nombre":"Eder",
+    "apellido":"García",
+    "email":"eder@usac.com",
+    "contrasena":"SuperSegura",
+    "celular":12345678
+}*/
 router.post('/signinClientp', (req, res) => {
-    const { nombres, nit, edad, correo, pass, telefono } = req.body;
-    let sql = `call nuevo_usuario('${nombres}','${nit}',${edad},'${correo}','${telefono}',0,'','${pass}')`;
+    const { nombre, apellido, email, contrasena, celular } = req.body;
+    let sql = `select nuevo_usuario('${nombre}','${apellido}','${email}','${contrasena}',${celular},0)`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ auth: false });

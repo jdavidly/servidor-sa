@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 // --------------- CONEXION AL BUS DE INTEGRACION ---------------
 router.post('/crear-producto-cliente', (req, res) => {
     const { id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora } = req.body;
+    console.log('CLIENT: ',id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
     let sql = `CALL Nuevo_Producto(?,?,?,?,?,?,?,?)`;
     let sqlParams = [nombre, descripcion, foto, precio_venta, id_cliente, 1, stock, 0];
     let query = conn.query(sql, sqlParams, (err, results) => {
@@ -39,6 +40,7 @@ router.post('/crear-producto-cliente', (req, res) => {
 
 router.post('/crear-producto-proveedor', (req, res) => {
     const { id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora } = req.body;
+    console.log('PROVIDER: ',id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
     let sql = `CALL Nuevo_Producto(?,?,?,?,?,?,?,?)`;
     let sqlParams = [nombre, descripcion, foto, precio_venta, id_proveedor, 1, stock, 0];
     let query = conn.query(sql, sqlParams, (err, results) => {
