@@ -19,7 +19,6 @@ router.post('/login', (req, res) => {
     console.log("en login");
     const { email, password } = req.body;
     const sql = `SELECT id_usuario as user FROM usuario WHERE correo='${email}' AND pass='${password}'`;
-    console.log(sql);
     const query = conn.query(sql, (err, results) => {
         
         if (err) {
@@ -40,16 +39,22 @@ router.post('/login', (req, res) => {
 router.post('/loginp', (req, res) => {
     const { correo, pass } = req.body;
     const sql = `SELECT * FROM Usuario WHERE correo='${correo}' AND pass='${pass}'`;
+    console.log(sql)
+    //console.log(conn);
+    
     const query = conn.query(sql, (err, results) => {
         if (err) {
+            console.log("error1")
             res.send({ auth: false });
         } else {
             if (results.length === 1) {
+                console.log(results[0])
                 res.send({
                     auth: true,
                     result: results[0]
                 });
             } else {
+                console.log("error2")
                 res.send({ auth: false });
             }
         }
