@@ -243,8 +243,29 @@ DELIMITER ;
 
 
 
-
-
+-- ------------------ PROCEDIMIENTOS EXTRA -----------------------
+DELIMITER $$
+CREATE PROCEDURE Insertar_Carrito(IN _Usuario INT(11))
+BEGIN
+	INSERT INTO CARRITO(Fecha_Ingreso, Estado, USUARIO_Id_Usuario)
+	VALUES(CURDATE(),0,_Usuario);
+	SELECT LAST_INSERT_ID();
+END$$
+DELIMITER;
+-- ----------------
+DELIMITER $$
+CREATE PROCEDURE Insertar_Detalle_Carrito(
+	IN _id_carrito INTEGER,
+	IN _Producto INTEGER,
+	IN _Cantidad INTEGER)
+BEGIN
+	DECLARE _monto DECIMAL(10,2);
+    
+    SET _monto = (SELECT Precio_Unitario FROM Producto WHERE Id_producto = _Producto);
+	INSERT INTO DETALLE_CARRITO(CARRITO_Id_Carrito, Producto_Id_Producto, Monto, Cantidad)
+	VALUES(_id_carrito, _Producto, (_monto*_Cantidad), _Cantidad);
+END$$
+DELIMITER;
 
 
 

@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 // --------------- CONEXION AL BUS DE INTEGRACION ---------------
 router.post('/crear-producto-cliente', (req, res) => {
     const { id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora } = req.body;
-    console.log('CLIENT: ',id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
+    console.log('CLIENT: ', id_cliente, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
     let sql = `CALL Nuevo_Producto(?,?,?,?,?,?,?,?)`;
     let sqlParams = [nombre, descripcion, foto, precio_venta, id_cliente, 1, stock, 0];
     let query = conn.query(sql, sqlParams, (err, results) => {
@@ -40,7 +40,7 @@ router.post('/crear-producto-cliente', (req, res) => {
 
 router.post('/crear-producto-proveedor', (req, res) => {
     const { id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora } = req.body;
-    console.log('PROVIDER: ',id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
+    console.log('PROVIDER: ', id_proveedor, nombre, descripcion, stock, precio_venta, foto, fecha_subasta, precio_inicial_subasta, precio_compralo_ahora);
     let sql = `CALL Nuevo_Producto(?,?,?,?,?,?,?,?)`;
     let sqlParams = [nombre, descripcion, foto, precio_venta, id_proveedor, 1, stock, 0];
     let query = conn.query(sql, sqlParams, (err, results) => {
@@ -51,7 +51,7 @@ router.post('/crear-producto-proveedor', (req, res) => {
                 message: `Se esperaba obtener 'precio_venta' o 'fecha_subasta', 'precio_inicial_subasta' y 'precio_compralo_ahora'.`
             });
         } else {
-                //res.send(results);
+            //res.send(results);
             res.send({
                 status: 'success',
                 data: {
@@ -73,9 +73,16 @@ router.post('/crear-producto-proveedor', (req, res) => {
 
 router.get('/ver-productos', (req, res) => {
     const sql = `
-        select Id_Producto as id_producto, nombre, descripcion, Inventario as stock, Precio_Unitario as precio,
-		       Url_ as foto, Id_Producto as precio_inicial_subasta, Id_Producto as precio_inicial_subasta
-               from producto;
+    select Id_Producto as id_producto, 
+    nombre, 
+    descripcion, 
+    Inventario as stock, 
+    Precio_Unitario as precio_venta,
+    Url_ as foto,
+    NOW() as fecha_subasta,
+    Id_Producto as precio_inicial_subasta,
+    Id_Producto as precio_compralo_ahora
+    from producto;
         `;
     const query = conn.query(sql, (err, results) => {
         if (err) {
@@ -106,12 +113,12 @@ router.get('/ver-producto', (req, res) => { ///ver-producto?id_producto=val
                 message: 'Ocurrio un error inesperado.'
             });
         } else {
-            if(!results){
+            if (!results) {
                 res.send({
                     status: 'fail',
                     message: 'No existe producto.'
                 });
-            }else{
+            } else {
                 res.send({
                     status: 'success',
                     data: results
@@ -123,7 +130,45 @@ router.get('/ver-producto', (req, res) => { ///ver-producto?id_producto=val
 
 router.post('/realizar-compra', (req, res) => {
     const { id_cliente, productos } = req.body;
-    console.log('PARAMS: ', id_cliente, productos);
+    //--------------- Creando carrito -------------------
+    let sql = `CALL Insertar_Carrito(?)`;
+    let sqlParams = [id_cliente];
+    let id_Carrito;
+    let query = conn.query(sql, sqlParams, (err, results) => {
+        if (err) {
+            res.send({
+                status: 'fail',
+                message: `Error en la conexion.`
+            });
+        } else {
+            id_Carrito = results[0][0]['LAST_INSERT_ID()'];
+            //console.log('ID_CARRITO', id_Carrito);
+            //res.send(results);
+            
+            for (let x = 0; x < productos.length; x++) {
+                let p = productos[x];
+                let sql2 = `CALL Insertar_Detalle_Carrito(?,?,?)`;
+                let sqlParams2 = [id_Carrito, p.id_producto, p.cantidad];
+                const query2 = conn.query(sql2, sqlParams2, (err1, results1) => {
+                    if (err1) {
+                        
+                    }
+                });
+            }      
+            res.send({
+                status: 'success',
+                message: 'Se ha relizado la compra de manera exitosa.'
+            });  
+
+
+        }
+    });
+    
+
+
+    
+
+    // console.log('PARAMS: ', id_cliente, productos);
 
 });
 
