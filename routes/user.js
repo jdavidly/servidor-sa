@@ -40,7 +40,7 @@ router.post('/login', (req, res) => {
     "email":"eder@usac.com",
     "contrasena":"SuperSegura"
 }*/
-router.post('/loginp', (req, res) => {
+router.post('/login-cliente', (req, res) => {
     const { email, contrasena } = req.body;
     const sql = `SELECT * FROM Usuario WHERE email='${email}' AND contrasena='${contrasena}'`;
     console.log(sql);
@@ -86,7 +86,7 @@ router.post('/signinClient', (req, res) => {
     "contrasena":"SuperSegura",
     "celular":12345678
 }*/
-router.post('/signinClientp', (req, res) => {
+router.post('/registrar-cliente', (req, res) => {
     const { nombre, apellido, email, contrasena, celular } = req.body;
     let sql = `select nuevo_usuario('${nombre}','${apellido}','EsCliente','${email}','${contrasena}',${celular},'dirCliente',0)`;
     let query = conn.query(sql, (err, results) => {
@@ -98,7 +98,7 @@ router.post('/signinClientp', (req, res) => {
     });
 });
 
-router.post('/signinProvider', (req, res) => {
+router.post('/registrar-proveedor', (req, res) => {
     const { nombre, apellido, empresa, email, contrasena, direccion } = req.body;
     let sql = `select nuevo_usuario('${nombre}','${apellido}','${empresa}','${email}','${contrasena}',0,'${direccion}', 1)`;
     console.log("query "+sql);
