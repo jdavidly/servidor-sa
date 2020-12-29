@@ -88,7 +88,7 @@ router.post('/signinClient', (req, res) => {
 }*/
 router.post('/signinClientp', (req, res) => {
     const { nombre, apellido, email, contrasena, celular } = req.body;
-    let sql = `select nuevo_usuario('${nombre}','${apellido}','${email}','${contrasena}',${celular},0)`;
+    let sql = `select nuevo_usuario('${nombre}','${apellido}','EsCliente','${email}','${contrasena}',${celular},'dirCliente',0)`;
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ auth: false });
@@ -99,8 +99,9 @@ router.post('/signinClientp', (req, res) => {
 });
 
 router.post('/signinProvider', (req, res) => {
-    const { nombres, nit, correo, pass, direccion } = req.body;
-    let sql = `call nuevo_usuario('${nombres}','${nit}',0,'${correo}','',1,'${direccion}','${pass}')`;
+    const { nombre, apellido, empresa, email, contrasena, direccion } = req.body;
+    let sql = `select nuevo_usuario('${nombre}','${apellido}','${empresa}','${email}','${contrasena}',0,'${direccion}', 1)`;
+    console.log("query "+sql);
     let query = conn.query(sql, (err, results) => {
         if (err) {
             res.send({ auth: false });
